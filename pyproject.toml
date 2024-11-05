@@ -1,9 +1,10 @@
 [tool.poetry]
-name = "shopping-cart"
+name = "shopping_cart_api"
 version = "0.1.0"
 description = ""
 authors = ["willrockoliv <william.r.o.wro@gmail.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "3.12.2"
@@ -18,6 +19,7 @@ pytest = "^8.3.3"
 pytest-cov = "^6.0.0"
 pytest-mock = "^3.14.0"
 ruff = "^0.7.2"
+taskipy = "^1.14.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -32,3 +34,18 @@ addopts = '--cov=./shopping_cart_api -v --disable-warnings --exitfirst -o log_cl
 testpaths = [
   "tests/"
 ]
+
+[tool.taskipy.tasks]
+format = 'ruff check . --fix; ruff format .'
+run = 'fastapi dev shopping_cart_api/app.py'
+test = 'pytest -s -x --cov=shopping_cart_api -vv'
+cov = 'coverage html'
+build = """
+  poetry install --only main --sync &&
+  rm -rf dist/ &&
+  mkdir -p dist/lambda-package &&
+  cp -R .venv/lib/python*/site-packages/* dist/lambda-package/ &&
+  cp -R shopping_cart_api/ dist/lambda-package/ &&
+  cd dist/lambda-package &&
+  zip ../aws_lambda_artifact.zip -r .
+"""
