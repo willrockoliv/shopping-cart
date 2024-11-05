@@ -2,9 +2,7 @@ import json
 from http import HTTPStatus
 from unittest.mock import patch
 
-from fastapi import HTTPException
 from fastapi.testclient import TestClient
-import pytest
 
 from shopping_cart_api.app import OrderSchema
 
