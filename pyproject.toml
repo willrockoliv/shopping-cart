@@ -44,8 +44,8 @@ build = """
   poetry install --only main --sync &&
   rm -rf dist/ &&
   mkdir -p dist/lambda-package &&
-  cp -R .venv/lib/python*/site-packages/* dist/lambda-package/ &&
-  cp -R shopping_cart_api/ dist/lambda-package/ &&
+  cp -Rv .venv/lib/python*/site-packages/* dist/lambda-package/ &&
+  cp -Rv shopping_cart_api/ dist/lambda-package/ &&
   cd dist/lambda-package &&
   zip ../aws_lambda_artifact.zip -r .
 """
