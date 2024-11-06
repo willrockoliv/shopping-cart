@@ -20,6 +20,7 @@ pytest-cov = "^6.0.0"
 pytest-mock = "^3.14.0"
 ruff = "^0.7.2"
 taskipy = "^1.14.0"
+genbadge = {extras = ["all"], version = "^1.1.1"}
 
 [build-system]
 requires = ["poetry-core"]
@@ -38,8 +39,8 @@ testpaths = [
 [tool.taskipy.tasks]
 format = 'ruff check . --fix; ruff format .'
 run = 'fastapi dev shopping_cart_api/app.py'
-test = 'pytest -s -x --cov=shopping_cart_api -vv'
-cov = 'coverage html'
+test = 'pytest -s -x --cov=shopping_cart_api -vv --junitxml=.pytest-cov/junit.xml'
+cov = 'coverage html -d .pytest-cov/'
 build = """
   poetry install --only main --sync &&
   rm -rf dist/ &&

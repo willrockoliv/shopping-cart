@@ -1,6 +1,10 @@
 # shopping-cart
 
-![version](https://img.shields.io/static/v1.svg?label=version&message=0.1.0&color=blue&logo=github)
+![Version](https://img.shields.io/static/v1.svg?label=Version&message=0.1.0&color=blue&logo=github)
+![Python](https://img.shields.io/static/v1.svg?label=Python&message=^3.12.2&color=blue&logo=python)
+![Poetry](https://img.shields.io/static/v1.svg?label=Poetry&message=^1.8.4&color=blue&logo=poetry)
+![FastAPI](https://img.shields.io/static/v1.svg?label=FastAPI&message=^0.115.4&color=blue&logo=FastAPI)
+![Boto3](https://img.shields.io/static/v1.svg?label=Boto3&message=^1.35.54&color=blue&logo=amazonwebservices)
 
 # Backend for a Shopping Cart Microservice
 
@@ -9,6 +13,7 @@ This project implements the backend for a shopping cart microservice, designed t
 ## System Architecture
 
 ![Architecture](https://github.com/willrockoliv/shopping-cart/blob/main/docs/architecture.png)
+
 *to see the above diagram with more details, you can open it directly in [Excalidraw](https://excalidraw.com/), just import the [image](https://github.com/willrockoliv/shopping-cart/blob/main/docs/architecture.png) or the [.excalidraw](https://github.com/willrockoliv/shopping-cart/blob/main/docs/architecture.excalidraw) file*
 
 ### Operational Flow
