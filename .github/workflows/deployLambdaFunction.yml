@@ -29,10 +29,10 @@ jobs:
           zip ../aws_lambda_artifact.zip -r .
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
-          with:
-            role-to-assume: arn:aws:iam::072872553653:role/RoleForGitHubActionsDeployment
-            role-duration-seconds: 900
-            aws-region: us-east-1
+        with:
+          role-to-assume: arn:aws:iam::072872553653:role/RoleForGitHubActionsDeployment
+          role-duration-seconds: 900
+          aws-region: us-east-1
       - name: AWS CLI v2
         uses: imehedi/actions-awscli-v2@latest
         with:
