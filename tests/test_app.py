@@ -11,7 +11,7 @@ def test_root(client: TestClient):
     response = client.get("/")
 
     assert response.status_code == HTTPStatus.OK
-    assert response.json() == {"message": "Hi! 👋👋"}
+    assert response.json() == {"message": "Hi! 👋"}
 
 
 def test_create_order(client: TestClient):
