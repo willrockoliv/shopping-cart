@@ -34,35 +34,49 @@ This project implements the backend for a shopping cart microservice, designed t
 
 ### Data Lake and Medallion Architecture Layers
 
-The system uses a **Data Lake** with a Medallion architecture (Bronze, Silver, and Gold layers) to ensure data quality and prepare it for analytics.
+To implement the **Medallion Architecture** (Bronze, Silver, and Gold layers) an **Airflow** is used for orchestrate the data journey through these layers, ensuring data quality and scalability for analytics.
 
-1. **Bronze Layer**
-   - Stores raw transaction data.
+1. **Bronze Layer:** A scheduled DAG will run periodically extracting new records in DynamoDB and stores raw data (JSON Files) in a **S3 Bucket**, partitioning by `year/month/day/hour/`, using the [`DynamoDBToS3Operator()`](https://airflow.apache.org/docs/apache-airflow-providers-amazon/stable/transfer/dynamodb_to_s3.html).
 
-2. **Silver Layer**
-   - Performs transformations (such as data cleaning and enrichment). After generating datasets, a **quality gate** is applied to check data quality (using libraries like [SODA](https://www.soda.io/) or [Great Expectations](https://greatexpectations.io/)) before moving to the next layer. The Silver layer also uses a **Glue Data Catalog** for metadata management (or [Amundsen](https://www.amundsen.io/)).
+2. **Silver Layer:**
+    - Performs transformations (such as data cleaning and enrichment) using **Spark** and **Amazon EMR** clusters, orchestrated by a DAG using [EMR Operators](https://airflow.apache.org/docs/apache-airflow-providers-amazon/stable/operators/emr/emr.html).
+    - The datasets are written partitioned in S3 buckets in **parquet** file format.
+    - A **quality gate** is applied to check data quality using libraries like [SODA](https://www.soda.io/) or [Great Expectations](https://greatexpectations.io/), before moving to the next layer.
+    - The Silver layer also uses a **Glue Crawler** to catalog the metadata in the **Glue Data Catalog** (or [Amundsen](https://www.amundsen.io/)).
 
-3. **Gold Layer**
-   - Stores transformed data ready for analysis. An additional **quality gate** is applied after dataset generation in this layer, ensuring that only high-quality data is available for analytics. The **Glue Data Catalog** also manages metadata in this layer.
+3. **Gold Layer:**
+    - Performs aggregations also using **Spark** and **Amazon EMR** clusters, orchestrated by a DAG using [EMR Operators](https://airflow.apache).
+    - The aggregated datasets are written partitioned in S3 buckets in **parquet** file format, ready for analysis.
+    - An additional **quality gate** is applied after dataset generation in this layer, ensuring that only high-quality data is available for analytics.
+    - And also uses the **Glue Crawler** to catalog in **Glue Data Catalog**.
 
-4. **Data Contract**
-    - A **Data Contract** formalizes data quality and structure expectations across layers, ensuring consistency and governance between the Silver and Gold layers.
+4. **Data Contract:** Formalizes data quality and structure expectations across layers, ensuring consistency and governance between the Data Producers and Data Consumers in the company.
+        - Reference:
+            - https://www.datamesh-manager.com/
+            - https://datacontract.com/ 
+
+
+4. **Data Contract:** Formalizes data quality and structure expectations across layers, ensuring consistency and governance between the Data Producers and Data Consumers in the company.
     - Reference:
         - https://www.datamesh-manager.com/
         - https://datacontract.com/
 
 ## Technologies Used
 
-- **Python** with **FastAPI** for implementing the shopping cart API.
+- **Python** with FastAPI for implementing the shopping cart API.
 - **Amazon SNS** and **SQS** for the asynchronous message queue.
 - **AWS Lambda** to process messages and store data.
-- **Amazon DynamoDB** for NoSQL storage of transaction data.
+- **DynamoDB** for NoSQL storage of transaction data.
 - **AWS CloudWatch** and **SNS** for monitoring and alerts.
-- **AWS Glue** for metadata management with the Data Catalog.
-- **Quality Gates** for data validation in the Silver and Gold pipelines.
+- **Apache Airflow** for data pipeline orchestration
+- **S3 Buckets** for storage
+- **Apache Spark** for distributed data processing
+- **AWS Glue** (**Crawler** and **Catalog**) for metadata management.
+- **Quality Gates** libraries for data validation in the Silver and Gold pipelines.
     - [SODA](https://www.soda.io/)
     - [Great Expectations](https://greatexpectations.io/)
-- **Data Lake** with Medallion architecture (Bronze, Silver, and Gold layers).
+- **Data Contracts** for consistency and governance between the Data Producers and Data Consumers in the company.
+- **Medallion architecture** (Bronze, Silver, and Gold layers).
 
 ## Configuration Requirements
 
