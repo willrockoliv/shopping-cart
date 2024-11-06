@@ -1,5 +1,9 @@
 name: Deploy Shopping Cart API on Lamnda Function
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   push:
     paths:
@@ -23,13 +27,15 @@ jobs:
           cp -Rv shopping_cart_api/ dist/lambda-package/
           cd dist/lambda-package
           zip ../aws_lambda_artifact.zip -r .
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+          with:
+            role-to-assume: arn:aws:iam::072872553653:role/RoleForGitHubActionsDeployment
+            role-duration-seconds: 900
+            aws-region: us-east-1
       - name: AWS CLI v2
         uses: imehedi/actions-awscli-v2@latest
         with:
           args: "lambda update-function-code \
             --function-name arn:aws:lambda:us-east-1:072872553653:function:shopping_cart_api \
             --zip-file fileb://dist/aws_lambda_artifact.zip"
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_DEFAULT_REGION: "us-east-1"
