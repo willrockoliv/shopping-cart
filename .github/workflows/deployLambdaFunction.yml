@@ -84,7 +84,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::072872553653:role/RoleForGitHubActionsDeployment
+          role-to-assume: ${{ secrets.ROLE_FOR_GIT_HUB_ACTIONS_DEPLOYMENT }}
           role-duration-seconds: 900
           aws-region: us-east-1
       #----------------------------------------------
@@ -94,5 +94,5 @@ jobs:
         uses: imehedi/actions-awscli-v2@latest
         with:
           args: "lambda update-function-code \
-            --function-name arn:aws:lambda:us-east-1:072872553653:function:shopping_cart_api \
+            --function-name ${{ secrets.LAMBDA_FUNCTION_ARN }} \
             --zip-file fileb://dist/aws_lambda_artifact.zip"
