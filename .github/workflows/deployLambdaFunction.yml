@@ -55,6 +55,8 @@ jobs:
       #              run test suite
       #----------------------------------------------
       - name: Run tests
+        env:
+          SNS_TARGET_ARN: ${{ secrets.SNS_TARGET_ARN }}
         run: |
           source .venv/bin/activate
           pytest tests/
