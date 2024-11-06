@@ -6,7 +6,7 @@ Backend for a Shopping Cart Microservice
 
 ![Architecture](https://github.com/willrockoliv/shopping-cart/blob/main/docs/architecture.png)
 
-# Shopping Cart - Backend for Purchase Processing Microservice
+# Backend for a Shopping Cart Microservice
 
 This project implements the backend for a shopping cart microservice, designed to process purchase transactions securely, resiliently, and at scale. The architecture uses AWS services to ensure reliable data storage and asynchronous processing, with monitoring and alerts in case of failures. The solution includes a layered Data Lake for data analytics, with quality and governance policies in place.
 
