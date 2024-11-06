@@ -75,7 +75,7 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.ROLE_TO_ASSUME }}
+          role-to-assume: arn:aws:iam::072872553653:role/RoleForGitHubActionsDeployment
           role-duration-seconds: 900
           aws-region: us-east-1
       #----------------------------------------------
