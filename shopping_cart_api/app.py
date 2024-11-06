@@ -33,7 +33,7 @@ def send_sns_message(json_message: str):
 
 @app.get("/")
 async def hello_world():
-    return {"message": "Hi! 👋👋"}
+    return {"message": "Hi! 👋"}
 
 
 @app.post("/order/", status_code=HTTPStatus.CREATED, response_model=OrderSchema)
