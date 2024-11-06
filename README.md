@@ -9,6 +9,7 @@ This project implements the backend for a shopping cart microservice, designed t
 ## System Architecture
 
 ![Architecture](https://github.com/willrockoliv/shopping-cart/blob/main/docs/architecture.png)
+*to see the above diagram with more details, you can open it directly in [Excalidraw](https://excalidraw.com/), just import the [image](https://github.com/willrockoliv/shopping-cart/blob/main/docs/architecture.png) or the [.excalidraw](https://github.com/willrockoliv/shopping-cart/blob/main/docs/architecture.excalidraw) file*
 
 ### Operational Flow
 
