@@ -39,8 +39,8 @@ testpaths = [
 [tool.taskipy.tasks]
 format = 'ruff check . --fix; ruff format .'
 run = 'fastapi dev shopping_cart_api/app.py'
-test = 'pytest -s -x --cov=shopping_cart_api -vv --junitxml=.pytest-cov/junit.xml'
-cov = 'coverage html -d .pytest-cov/'
+test = 'pytest -s -x --cov=shopping_cart_api -vv --junitxml=docs/tests/pytest/junit.xml'
+cov = 'coverage xml -o docs/tests/coverage/coverage.xml && coverage html -d docs/tests/coverage/html/'
 build = """
   poetry install --only main --sync &&
   rm -rf dist/ &&
@@ -49,4 +49,8 @@ build = """
   cp -Rv shopping_cart_api/ dist/lambda-package/ &&
   cd dist/lambda-package &&
   zip ../aws_lambda_artifact.zip -r .
+"""
+gb = """
+  genbadge tests -i docs/tests/pytest/junit.xml -o docs/tests/badges/tests-badge.svg -v &&
+  genbadge coverage -i docs/tests/coverage/coverage.xml -o docs/tests/badges/coverage-badge.svg -v
 """

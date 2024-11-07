@@ -5,6 +5,8 @@
 ![Poetry](https://img.shields.io/static/v1.svg?label=Poetry&message=^1.8.4&color=blue&logo=poetry)
 ![FastAPI](https://img.shields.io/static/v1.svg?label=FastAPI&message=^0.115.4&color=blue&logo=FastAPI)
 ![Boto3](https://img.shields.io/static/v1.svg?label=Boto3&message=^1.35.54&color=blue&logo=amazonwebservices)
+[![Tests Status](./docs/tests/badges/tests-badge.svg?dummy=8484744)](./docs/tests/coverage/html/index.html)
+[![Coverage Status](./docs/tests/badges/coverage-badge.svg?dummy=8484744)](./docs/tests/coverage/html/index.html)
 
 # Backend for a Shopping Cart Microservice
 
